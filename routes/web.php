@@ -9,6 +9,17 @@ Route::get('/', function () {
 });
 
 /**
+ * testing routes
+ * 
+ */
+Route::view('/example-page','example-page');
+Route::view('/example-auth','example-auth');
+
+
+
+
+
+/**
  * ADMIN ROUTES
  * 
  */
