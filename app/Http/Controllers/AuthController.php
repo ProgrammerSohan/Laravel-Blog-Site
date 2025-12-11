@@ -22,4 +22,11 @@ class AuthController extends Controller
         return view('back.pages.auth.forgot',$data);
         
      }
+
+     public function loginHandler(Request $request){
+        dd($request->all());
+     }
+
+
+
 }
