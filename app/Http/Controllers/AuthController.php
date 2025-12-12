@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use App\Models\User;
 use App\UserStatus;
+use App\UserType;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
@@ -30,7 +32,7 @@ class AuthController extends Controller
         //dd($request->all());
         $fieldType = filter_var($request->login_id, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
         //dd($fieldType);
-        if($fieldType == 'email' ){
+        if( $fieldType == 'email' ){
             $request->validate([
                 'login_id'=>'required|email|exists:users,email',
                 'password'=>'required|min:5'
@@ -53,6 +55,38 @@ class AuthController extends Controller
             ]);
 
         }
+
+        $creds = array(
+            $fieldType=>$request->login_id,
+            'password'=>$request->password,
+
+        );
+
+        if( Auth::attempt($creds) ){
+            //check if account is inactive mode
+            if( auth()->user()->status == UserStatus::Inactive ){
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+                return redirect()->route('admin.login')->with('fail','Your account is currently inactive. Please, contact support at (support@larablog.test) for further assistance.');
+
+            }
+
+            //check if account is in pending mode
+            if( auth()->user()->status == UserStatus::Pending ){
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+                return redirect()->route('admin.login')->with('fail','Your account is currently pending approval.Please, check your email for futher instructions or contact support at (support@larablog.test) assistance.');
+
+            }
+            //redirect use to dashboard
+            return redirect()->route('admin.dashboard');
+        }else{
+
+            return redirect()->route('admin.login')->withInput()->with('fail','Incorrect password');
+        }
+
 
 
      }
