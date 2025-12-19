@@ -87,7 +87,19 @@ class AuthController extends Controller
             return redirect()->route('admin.login')->withInput()->with('fail','Incorrect password');
         }
 
+     }//end method
 
+     public function sendPasswordResetLink(Request $request){
+            //validate the form
+            $request->validate([
+                'email'=>'required|email|exists:users,email'
+
+            ],[
+                'email.required'=>'The :attribute is required',
+                'email.email'=>'Invalid email address',
+                'email.exists'=>'We can not find a user with this email address'
+
+            ]);
 
      }
 
