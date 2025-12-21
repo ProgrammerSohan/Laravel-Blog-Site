@@ -8,6 +8,12 @@ use App\Models\User;
 use App\UserStatus;
 use App\UserType;
 use Illuminate\Support\Facades\Auth;
+use Iluminate\Support\Facades\DB;
+use Iluminate\Support\Facades\Hash;
+use Iluminate\Support\Str;
+use Illuminate\Support\Carbon;
+use App\Helpers\CMail;
+
 
 class AuthController extends Controller
 {
@@ -100,6 +106,52 @@ class AuthController extends Controller
                 'email.exists'=>'We can not find a user with this email address'
 
             ]);
+
+            //Get User Details
+            $user = User::where('email',$request->email)->first();
+
+            //Generate Token
+            $token = base64_encode(Str::random(64));
+
+            //Check if there is an existing token
+            $oldToken = DB::table('password_reset_tokens')
+                        ->where('email',$user->email)
+                        ->first();
+
+            if( $oldToken ){
+                //Update existing token
+                DB::table('password_reset_tokens')
+                ->where('email',$user->email)
+                ->update([
+                    'token'=>$token,
+                    'created_at'=>Carbon::now()
+
+                ]);
+
+            }     
+            //create clickable action link
+            $actionLink = route('admin.reset_password_form',['token'=>$token]);
+
+            $data = array(
+                'actionlink'=>$actionLink,
+                'user'=>$user
+
+            );
+            $mail_body = view('email-templates.forgot-template',$data)->render();
+
+            $mailConfig = array(
+                'recipient_address'=>$user->email,
+                'recipient_name'=>$user->name,
+                'subject'=>'Reset Password',
+                'body'=>$mail_body
+
+            );
+            if(CMail::send($mailConfig)){
+                return redirect()->route('admin.forgot')->with('success','We have e-mailed your password reset link.');
+            }else{
+                return redirect()->route('admin.forgot')->with('fail','Something went wrong.Resetting password link not sent.Try again later.');
+
+            }
 
      }
 
