@@ -3,14 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 use App\Models\User;
+
+//use App\Models\User;
 use App\UserStatus;
 use App\UserType;
 use Illuminate\Support\Facades\Auth;
-use Iluminate\Support\Facades\DB;
+//use Iluminate\Support\Facades\DB;
 use Iluminate\Support\Facades\Hash;
-use Iluminate\Support\Str;
+//use Iluminate\Support\Str;
 use Illuminate\Support\Carbon;
 use App\Helpers\CMail;
 
