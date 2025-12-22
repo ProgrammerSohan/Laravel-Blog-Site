@@ -131,7 +131,16 @@ class AuthController extends Controller
 
                 ]);
 
-            }     
+            }else {
+                DB::table('password_reset_tokens')
+                    ->insert([
+                        'email' => $user->email,
+                        'token' => $token,
+                        'created_at' => Carbon::now(),
+
+                    ]);
+
+            }
             //create clickable action link
             $actionLink = route('admin.reset_password_form',['token'=>$token]);
 
@@ -156,7 +165,28 @@ class AuthController extends Controller
 
             }
 
-     }
+        }//end method
+
+        public function resetForm(Request $request, $token = null){
+           // dd($token);
+           //check if this token is exists
+           $isTokenExists = DB::table('password_reset_tokens')
+                            ->where('token',$token)
+                            ->first();
+
+            if( !$isTokenExists ){
+                return redirect()->route('admin.forgot')->with('fail','Invalid token. Request another reset password link.');
+
+            }else{
+                 $data = [
+                    'pageTitle'=>'Reset Password',
+                    'token'=>$token
+
+                 ];
+            }
+                return view('back.pages.auth.reset',$data);
+
+        }//end method
 
 
 
