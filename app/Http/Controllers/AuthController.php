@@ -188,6 +188,56 @@ class AuthController extends Controller
 
         }//end method
 
+        public function resetPasswordHandler(Request $request){
+            //validate the form
+            $request->validate([
+                'new_password'=>'required|min:5|required_with:new_password_confirmation|same:new_password_confirmation',
+                'new_password_confirmation'=>'required'
 
+            ]);
+
+            $dbToken = DB::table('password_reset_tokens')
+                        ->where('token',$request->token)
+                        ->first();
+
+            //get user details
+            $user = User::where('email',$dbToken->email)->first();
+
+            //update password
+            User::where('email',$user->email)->update([
+                'password'=>Hash::make($request->new_password)
+            ]);
+
+            //send notification email to this user email address that contains new password
+            $data = array(
+                'user'=>$user,
+                'new_password'=>$request->new_password
+
+            );
+
+            $mail_body = view('email-templates.password-changes-template',$data)->render();
+
+            $mailConfig = array(
+                'recipient_address'=>$user->email,
+                'recipient_name'=>$user->name,
+                'subject'=>'Password Changed',
+                'body'=>$mail_body
+            );
+
+            if( CMail::send($mailConfig)){
+                //delete token from db
+                DB::table('password_reset_tokens')->where([
+                    'email'=>$dbToken->email,
+                    'token'=>$dbToken->token
+
+                ])->delete();
+
+                return redirect()->route('admin.login')->with('success','Done!, Your password has been changed successfully.Use your new password for login into system.');
+
+            }else{
+                return redirect()->route('admin.reset_password_form',['token'=>$dbToken->token])->with('fail','Something went wrong. Try again later.');
+            }
+
+        }
 
 }
