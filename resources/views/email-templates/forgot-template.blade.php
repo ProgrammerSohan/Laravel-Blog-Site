@@ -45,7 +45,7 @@
                         </p>
 
                         <p style="font-size:14px; color:#666666; margin-top:20px;">
-                            This link will expire in 60 minutes.
+                            This link will expire in 15 minutes.
                         </p>
 
                         <p style="font-size:14px; margin-top:30px;">
@@ -58,7 +58,7 @@
                 <!-- Footer -->
                 <tr>
                     <td style="background:#f1f1f1; padding:15px; text-align:center; font-size:13px; color:#777777;">
-                        © {{ date('Y') }} Programmer. All rights reserved.
+                        © {{ date('Y') }} Programmer Sohan. All rights reserved.
                     </td>
                 </tr>
 

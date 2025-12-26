@@ -80,7 +80,7 @@
             <p>Your account password has been successfully changed. Below are your updated login details:</p>
 
             <div class="credentials">
-                <p><strong>Email/Username:</strong> {{ $user->email }} or {{ $user->username}}</p>
+                <p><strong>Email/Username:</strong> {{ $user->email }} or {{ $user->name}}</p>
              
                 <p><strong>New Password:</strong> {{ $new_password }}</p>
             </div>
