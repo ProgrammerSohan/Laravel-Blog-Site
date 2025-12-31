@@ -43,6 +43,7 @@
 			type="text/css"
 			href="/back/vendors/styles/icon-font.min.css"
 		/>
+		<link rel="stylesheet" href="/extra-assets/ijabo/css/ijaboCropTool.min.css">
 		<link rel="stylesheet" type="text/css" href="/back/vendors/styles/style.css" />
 
 	@stack('stylesheets')
@@ -540,6 +541,21 @@
 		<script src="/back/vendors/scripts/script.min.js"></script>
 		<script src="/back/vendors/scripts/process.js"></script>
 		<script src="/back/vendors/scripts/layout-settings.js"></script>
+		<script src="/extra-assets/ijabo/js/ijaboCropTool.min.js"></script>
+		<script src="/extra-assets/ijabo/js/jquery-1.7.1.min.js"></script> 
+		<script>
+			window.addEventListener('showToastr',function(event){
+				$().notifa({
+					vers:2,
+					cssClass:event.detail[0].type,
+					html:event.detail[0].html,
+					delay:2500
+
+				});
+
+			});
+
+		</script>
 		@stack('scripts')
 	</body>
 </html>
