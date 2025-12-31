@@ -224,7 +224,7 @@
 						<div
 							class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list"
 						>
-							<a class="dropdown-item" href="profile.html"
+							<a class="dropdown-item" href="{{ route('admin.profile')}}"
 								><i class="dw dw-user1"></i> Profile</a
 							>
 							<a class="dropdown-item" href="profile.html"
@@ -491,8 +491,8 @@
 					
 						<li>
 							<a
-								href=""
-								target="_blank"
+								href="{{ route('admin.profile') }}"
+								
 								class="dropdown-toggle no-arrow">
 								<span class="micon fa fa-user-circle"></span>
 								<span class="mtext"
