@@ -72,9 +72,61 @@
 										<div class="tab-content">
 											<!-- Timeline Tab start -->
 											<div class="tab-pane fade {{ $tab == 'personal_details' ? 'show active' : '' }}" id="personal_details" role="tabpanel">
-												<div class="pd-20">
-													--personal details--
+									<div class="pd-20">
+										<form action="">
+											<div class="row">
+												<div class="col-md-12">
+													<div class="form-group">
+														<label for="">Full Name</label>
+														<input type="text" class="form-control" wire:model="name" placeholder="Enter full name">
+														@error('name')
+															<span class="text-danger">{{ $message }}</span>
+														@enderror
+
+													</div>
+
 												</div>
+
+												<div class="col-md-6">
+													<div class="form-group">
+														<label for="">Email</label>
+														<input type="text" class="form-control" wire:model="name" placeholder="Enter email address">
+														@error('email')
+															<span class="text-danger">{{ $message }}</span>
+														@enderror
+
+													</div>
+												</div>
+
+												<div class="col-md-6">
+													<div class="form-group">
+														<label for="">Username</label>
+														<input type="text" class="form-control" wire:model="username" placeholder="Enter username">
+														@error('username')
+															<span class="text-danger">{{ $message }}</span>
+														@enderror
+
+													</div>
+												</div>
+										<div class="col-md-12">
+											<div class="form-group">
+												<label for="">Bio</label>
+												<textarea wire:model="bio" cols="4" rows="4" class="form-control" placeholder="Type your bio..."></textarea>
+												@error('bio')
+													<span class="text-danger">{{ $message }}</span>
+												@enderror
+
+												</div>
+												</div>		
+												</div>
+
+											<div class="form-group">
+												<button class="btn btn-primary">Save Changes</button>
+											
+											</div>	
+
+										</form>
+									</div>
 											</div>
 											<!-- Timeline Tab End -->
 											<!-- Tasks Tab start -->
