@@ -25,3 +25,40 @@
 @livewire('admin.profile')                
 
 @endsection
+ @kropifyScripts
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        const cropper = new Kropify('#profilePictureFile', {
+            preview: '#profilePicturePreview',
+            aspectRatio: 1,
+            viewMode: 1,
+            processURL: '',
+            allowedExtensions: ['jpg', 'jpeg', 'png'],
+            maxSize: 2097152, // 2MB
+            showLoader: true,
+            animationClass: 'pulse',
+            cancelButtonText: 'Cancel',
+            resetButtonText: 'Reset',
+            cropButtonText: 'Crop & Update',
+
+            onError: function (msg) {
+                alert(msg);
+            },
+
+            onDone: function (response) {
+                console.log(response);
+
+                if (response.status === 'success') {
+                    // update image preview after crop
+                    document.getElementById('profilePicturePreview').src = response.image_url;
+                }
+            }
+        });
+
+    });
+</script>
+@endpush
+

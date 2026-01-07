@@ -5,7 +5,8 @@
 		<!-- Basic Page Info -->
 		<meta charset="utf-8" />
 		<title>@yield('pageTitle')</title>
-
+		<meta name="csrf-token" content="{{ csrf_token() }}">
+   
 		<!-- Site favicon -->
 		<link
 			rel="apple-touch-icon"
@@ -46,6 +47,7 @@
 		<link rel="stylesheet" href="/extra-assets/ijabo/css/ijaboCropTool.min.css">
 		<link rel="stylesheet" type="text/css" href="/back/vendors/styles/style.css" />
 
+	 @kropifyStyles 	
 	@stack('stylesheets')
 	</head>
 	<body>
@@ -510,6 +512,7 @@
 		<script src="/back/vendors/scripts/layout-settings.js"></script>
 		<script src="/extra-assets/ijabo/js/ijaboCropTool.min.js"></script>
 		<script src="/extra-assets/ijabo/js/jquery-1.7.1.min.js"></script> 
+		@kropifyScripts
 		<script>
 			window.addEventListener('showToastr',function(event){
 				$().notifa({
