@@ -513,9 +513,9 @@
 		<script>
 			window.addEventListener('showToastr',function(event){
 				$().notifa({
-					vers:2,
+					vers:1,
 					cssClass:event.detail[0].type,
-					html:event.detail[0].html,
+					html:event.detail[0].message,
 					delay:2500
 
 				});
