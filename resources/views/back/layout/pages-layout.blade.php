@@ -415,7 +415,7 @@
 						</li>
 
 						<li>
-							<a href="" class="dropdown-toggle no-arrow">
+							<a href="{{ route('admin.categories') }}" class="dropdown-toggle no-arrow">
 								<span class="micon fa fa-th-list"></span
 								><span class="mtext">Categories</span>
 							</a>
@@ -510,6 +510,8 @@
 		<script src="/back/vendors/scripts/script.min.js"></script>
 		<script src="/back/vendors/scripts/process.js"></script>
 		<script src="/back/vendors/scripts/layout-settings.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 		<script src="/extra-assets/ijabo/js/ijaboCropTool.min.js"></script>
 		<script src="/extra-assets/ijabo/js/jquery-1.7.1.min.js"></script> 
 		@kropifyScripts

@@ -25,40 +25,60 @@
 @livewire('admin.profile')                
 
 @endsection
- @kropifyScripts
+@kropifyScripts
 
 @push('scripts')
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function () {
 
-        const cropper = new Kropify('#profilePictureFile', {
-            preview: '#profilePicturePreview',
-            aspectRatio: 1,
-            viewMode: 1,
-            processURL: '',
-            allowedExtensions: ['jpg', 'jpeg', 'png'],
-            maxSize: 2097152, // 2MB
-            showLoader: true,
-            animationClass: 'pulse',
-            cancelButtonText: 'Cancel',
-            resetButtonText: 'Reset',
-            cropButtonText: 'Crop & Update',
+    const cropper = new Kropify('#profilePictureFile', {
+        preview: '#profilePicturePreview',
+        aspectRatio: 1,
+        viewMode: 1,
+        processURL: '{{ route("admin.update_profile_picture") }}',
+        allowedExtensions: ['jpg', 'jpeg', 'png'],
+        maxSize: 2097152, // 2MB
+        showLoader: true,
+        animationClass: 'pulse',
+        cancelButtonText: 'Cancel',
+        resetButtonText: 'Reset',
+        cropButtonText: 'Crop & Update',
 
-            onError: function (msg) {
-                alert(msg);
-            },
+        // Client-side / validation errors
+        onError: function (msg) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: msg,
+                confirmButtonColor: '#d33'
+            });
+        },
 
-            onDone: function (response) {
-                console.log(response);
-
-                if (response.status === 'success') {
-                    // update image preview after crop
-                    document.getElementById('profilePicturePreview').src = response.image_url;
-                }
-            }
+        // Server response
+       onDone: function (response) {
+    if (response.status === 1) {
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: response.message,
+            timer: 2000,
+            showConfirmButton: false
         });
 
+        document.getElementById('profilePicturePreview').src = response.image_url;
+    } else {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: response.message
+        });
+    }
+}
+
     });
+
+});
 </script>
 @endpush
+
 
